@@ -1,7 +1,880 @@
 <!DOCTYPE html>
-<html>
-<head><title>CI/CD Demo</title></head>
-<body>
-  <h1>Xin chao, day la ban 1</h1>
+<html lang="vi" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>An Văn Hải | C++ & Software Developer</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        mono: ['Fira Code', 'monospace'],
+                    },
+                    colors: {
+                        brand: {
+                            dark: '#0a0e17',
+                            card: '#111827',
+                            accent: '#3b82f6',
+                            purple: '#8b5cf6',
+                            cyan: '#06b6d4'
+                        }
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                        'glow': 'glow 3s ease-in-out infinite alternate',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-12px)' },
+                        },
+                        glow: {
+                            '0%': { boxShadow: '0 0 15px rgba(59, 130, 246, 0.3)' },
+                            '100%': { boxShadow: '0 0 30px rgba(139, 92, 246, 0.6)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Custom Glassmorphism and Utility Styles -->
+    <style>
+        body {
+            background-color: #080c14;
+            color: #f3f4f6;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* Glassmorphism utility */
+        .glass-panel {
+            background: rgba(17, 24, 39, 0.65);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .glass-panel-hover {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .glass-panel-hover:hover {
+            border-color: rgba(59, 130, 246, 0.4);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px -10px rgba(59, 130, 246, 0.2);
+        }
+
+        /* Custom Gradient Text */
+        .gradient-text {
+            background: linear-gradient(135deg, #60a5fa 0%, #a78bfa 50%, #38bdf8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .gradient-border {
+            position: relative;
+            border-radius: 9999px;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6, #06b6d4);
+            padding: 3px;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #080c14;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1e293b;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #3b82f6;
+        }
+
+        /* Glowing backdrop Orbs */
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(90px);
+            z-index: -1;
+            opacity: 0.35;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body class="relative selection:bg-blue-500 selection:text-white">
+
+    <!-- Background Ambient Glowing Orbs -->
+    <div class="orb w-96 h-96 bg-blue-600 top-10 left-[-100px] animate-pulse-slow"></div>
+    <div class="orb w-80 h-80 bg-purple-600 top-[40%] right-[-50px] animate-pulse-slow"></div>
+    <div class="orb w-96 h-96 bg-cyan-600 bottom-20 left-[20%] animate-pulse-slow"></div>
+
+    <!-- Navigation Bar -->
+    <header class="fixed top-0 left-0 w-full z-50 transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20 glass-panel mt-4 rounded-2xl px-6">
+                <!-- Logo -->
+                <a href="#hero" class="flex items-center gap-2 text-xl font-bold tracking-tight">
+                    <span class="font-mono text-blue-400">&lt;</span>
+                    <span class="gradient-text">AnVănHải</span>
+                    <span class="font-mono text-purple-400">/&gt;</span>
+                </a>
+
+                <!-- Desktop Navigation Links -->
+                <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-300">
+                    <a href="#hero" class="hover:text-blue-400 transition-colors">Trang Chủ</a>
+                    <a href="#about" class="hover:text-blue-400 transition-colors">Giới Thiệu</a>
+                    <a href="#skills" class="hover:text-blue-400 transition-colors">Kỹ Năng</a>
+                    <a href="#projects" class="hover:text-blue-400 transition-colors">Dự Án</a>
+                    <a href="#contact" class="hover:text-blue-400 transition-colors">Liên Hệ</a>
+                </nav>
+
+                <!-- Action Button -->
+                <div class="hidden md:flex items-center gap-4">
+                    <a href="#contact" class="px-5 py-2.5 rounded-xl text-sm font-semibold text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 transition-all shadow-lg shadow-blue-500/25 active:scale-95">
+                        Kết Nối Ngay
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button id="menu-btn" aria-label="Toggle Navigation Menu" class="md:hidden text-gray-300 hover:text-white focus:outline-none p-2">
+                    <i class="fa-solid fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobile-menu" class="hidden md:hidden max-w-7xl mx-auto px-4 mt-2">
+            <div class="glass-panel rounded-2xl p-6 flex flex-col gap-4 text-center">
+                <a href="#hero" class="mobile-link text-gray-300 hover:text-blue-400 py-2">Trang Chủ</a>
+                <a href="#about" class="mobile-link text-gray-300 hover:text-blue-400 py-2">Giới Thiệu</a>
+                <a href="#skills" class="mobile-link text-gray-300 hover:text-blue-400 py-2">Kỹ Năng</a>
+                <a href="#projects" class="mobile-link text-gray-300 hover:text-blue-400 py-2">Dự Án</a>
+                <a href="#contact" class="mobile-link text-gray-300 hover:text-blue-400 py-2">Liên Hệ</a>
+                <a href="#contact" class="px-5 py-2.5 rounded-xl text-sm font-semibold text-white bg-gradient-to-r from-blue-600 to-indigo-600 text-center">
+                    Kết Nối Ngay
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="hero" class="min-h-screen pt-32 pb-20 flex items-center justify-center relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                
+                <!-- Left Text Content -->
+                <div class="lg:col-span-7 flex flex-col gap-6 text-center lg:text-left">
+                    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-panel border border-blue-500/30 text-blue-400 text-xs sm:text-sm font-semibold w-fit mx-auto lg:mx-0">
+                        <span class="w-2 h-2 rounded-full bg-blue-400 animate-ping"></span>
+                        <span>Sinh viên Năm 3 • Đại học Đông Á</span>
+                    </div>
+
+                    <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight leading-tight">
+                        Xin chào, Tôi là <br>
+                        <span class="gradient-text">An Văn Hải</span>
+                    </h1>
+
+                    <!-- Typewriter dynamic text -->
+                    <div class="h-8 text-lg sm:text-2xl font-mono text-gray-300 flex items-center justify-center lg:justify-start gap-2">
+                        <span class="text-blue-400">&gt;</span>
+                        <span id="typewriter" class="text-indigo-300 border-r-2 border-blue-400 pr-1"></span>
+                    </div>
+
+                    <p class="text-gray-400 text-base sm:text-lg max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+                        "Đam mê chinh phục thuật toán, lập trình C++ và phát triển các giải pháp phần mềm tối ưu. Luôn chủ động học hỏi công nghệ mới và nâng cao tư duy lập trình."
+                    </p>
+
+                    <!-- CTA Buttons -->
+                    <div class="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-4">
+                        <a href="#skills" class="px-7 py-3.5 rounded-xl text-sm font-semibold text-white bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 hover:opacity-95 transition-all shadow-lg shadow-blue-500/25 flex items-center gap-2">
+                            <span>Khám Phá Kỹ Năng</span>
+                            <i class="fa-solid fa-arrow-right text-xs"></i>
+                        </a>
+                        <a href="https://www.facebook.com/share/1CXvAggeAa/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" class="px-7 py-3.5 rounded-xl text-sm font-semibold text-gray-300 glass-panel hover:bg-slate-800 hover:text-white transition-all flex items-center gap-2 border border-slate-700">
+                            <i class="fa-brands fa-facebook-f text-blue-400"></i>
+                            <span>Facebook Cá Nhân</span>
+                        </a>
+                    </div>
+
+                    <!-- Quick Social Chips -->
+                    <div class="flex items-center justify-center lg:justify-start gap-6 pt-6 text-gray-400">
+                        <span class="text-xs font-mono uppercase tracking-widest text-slate-500">Kết nối:</span>
+                        <a href="https://www.facebook.com/share/1CXvAggeAa/?mibextid=wwXIfr" target="_blank" class="hover:text-blue-400 transition-colors text-xl"><i class="fa-brands fa-facebook"></i></a>
+                        <a href="mailto:anvanhai.donga@gmail.com" class="hover:text-blue-400 transition-colors text-xl"><i class="fa-solid fa-envelope"></i></a>
+                        <a href="https://github.com" target="_blank" class="hover:text-blue-400 transition-colors text-xl"><i class="fa-brands fa-github"></i></a>
+                    </div>
+                </div>
+
+                <!-- Right Avatar & Code Card Visual -->
+                <div class="lg:col-span-5 flex justify-center">
+                    <div class="relative group w-72 sm:w-80">
+                        <!-- Neon Glow Ring -->
+                        <div class="absolute -inset-1 bg-gradient-to-r from-blue-600 via-purple-600 to-cyan-500 rounded-3xl blur-xl opacity-70 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-tilt"></div>
+                        
+                        <!-- Avatar Glass Container -->
+                        <div class="relative glass-panel rounded-3xl p-6 flex flex-col items-center gap-6">
+                            <div class="gradient-border w-40 h-40 rounded-full overflow-hidden shadow-2xl">
+                                <img src="https://images.unsplash.com/photo-1534972195531-d756b9bfa9f2?auto=format&fit=crop&w=600&q=80" 
+                                     alt="An Văn Hải Avatar" 
+                                     class="w-full h-full object-cover rounded-full filter grayscale hover:grayscale-0 transition duration-500">
+                            </div>
+
+                            <div class="text-center">
+                                <h3 class="text-xl font-bold text-white">An Văn Hải</h3>
+                                <p class="text-xs font-mono text-blue-400 mt-1">@donga_university</p>
+                            </div>
+
+                            <!-- Styled Code Widget Snippet -->
+                            <div class="w-full bg-slate-950 rounded-xl p-4 font-mono text-xs text-left border border-slate-800 text-slate-300 space-y-1">
+                                <p class="text-slate-500">// Modern C++ Developer</p>
+                                <p><span class="text-purple-400">#include</span> <span class="text-green-400">&lt;iostream&gt;</span></p>
+                                <p><span class="text-blue-400">int</span> <span class="text-yellow-400">main</span>() {</p>
+                                <p class="pl-4"><span class="text-blue-400">std::cout</span> &lt;&lt; <span class="text-green-400">"Hello, World!"</span>;</p>
+                                <p class="pl-4"><span class="text-purple-400">return</span> <span class="text-orange-400">0</span>;</p>
+                                <p>}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- About Me Section -->
+    <section id="about" class="py-24 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-xs font-mono font-bold tracking-widest text-blue-400 uppercase mb-2">// THÔNG TIN CÁ NHÂN</h2>
+                <p class="text-3xl sm:text-4xl font-extrabold text-white">Hành Trình Lập Trình & Định Hướng</p>
+                <div class="w-16 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto mt-4 rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                <!-- Detailed Info Card -->
+                <div class="glass-panel rounded-3xl p-8 space-y-6">
+                    <h3 class="text-2xl font-bold text-white flex items-center gap-3">
+                        <i class="fa-solid fa-user-graduate text-blue-400"></i>
+                        <span>Sinh viên Đại học Đông Á</span>
+                    </h3>
+                    <p class="text-gray-300 leading-relaxed">
+                        Hiện đang là sinh viên <strong class="text-blue-400">Năm 3 ngành Công nghệ Thông tin</strong> tại Đại học Đông Á (Đà Nẵng). Tôi tập trung chuyên sâu vào lập trình hướng đối tượng (OOP), cấu trúc dữ liệu, thuật toán nâng cao và ngôn ngữ C++.
+                    </p>
+                    <p class="text-gray-300 leading-relaxed">
+                        Với tinh thần kiên trì và tư duy logic sắc bén, tôi không ngừng thực hành qua các bài tập lớn, ứng dụng thực tế và luôn sẵn sàng hướng tới mục tiêu trở thành một <strong class="text-purple-400">Software Engineer chuyên nghiệp</strong>.
+                    </p>
+
+                    <!-- Personal Details Grid -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2 text-sm font-medium">
+                        <div class="flex items-center gap-3 text-gray-300">
+                            <i class="fa-solid fa-location-dot text-indigo-400 w-5"></i>
+                            <span>Đà Nẵng, Việt Nam</span>
+                        </div>
+                        <div class="flex items-center gap-3 text-gray-300">
+                            <i class="fa-solid fa-university text-indigo-400 w-5"></i>
+                            <span>Đại học Đông Á</span>
+                        </div>
+                        <div class="flex items-center gap-3 text-gray-300">
+                            <i class="fa-solid fa-code text-indigo-400 w-5"></i>
+                            <span>C++ / Software Dev</span>
+                        </div>
+                        <div class="flex items-center gap-3 text-gray-300">
+                            <i class="fa-solid fa-envelope text-indigo-400 w-5"></i>
+                            <span>anvanhai.donga@gmail.com</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Statistics & Achievement Cards Grid -->
+                <div class="grid grid-cols-2 gap-6">
+                    <div class="glass-panel glass-panel-hover rounded-2xl p-6 text-center flex flex-col justify-center items-center">
+                        <div class="w-12 h-12 rounded-xl bg-blue-500/10 flex items-center justify-center text-blue-400 text-2xl mb-4">
+                            <i class="fa-solid fa-calendar-check"></i>
+                        </div>
+                        <span class="text-3xl font-extrabold text-white">3+</span>
+                        <span class="text-xs font-medium text-gray-400 mt-1">Năm Học Lập Trình</span>
+                    </div>
+
+                    <div class="glass-panel glass-panel-hover rounded-2xl p-6 text-center flex flex-col justify-center items-center">
+                        <div class="w-12 h-12 rounded-xl bg-purple-500/10 flex items-center justify-center text-purple-400 text-2xl mb-4">
+                            <i class="fa-solid fa-diagram-project"></i>
+                        </div>
+                        <span class="text-3xl font-extrabold text-white">15+</span>
+                        <span class="text-xs font-medium text-gray-400 mt-1">Bài Tập & Project</span>
+                    </div>
+
+                    <div class="glass-panel glass-panel-hover rounded-2xl p-6 text-center flex flex-col justify-center items-center">
+                        <div class="w-12 h-12 rounded-xl bg-cyan-500/10 flex items-center justify-center text-cyan-400 text-2xl mb-4">
+                            <i class="fa-solid fa-code-commit"></i>
+                        </div>
+                        <span class="text-3xl font-extrabold text-white">100+</span>
+                        <span class="text-xs font-medium text-gray-400 mt-1">Bài Thuật Toán Solved</span>
+                    </div>
+
+                    <div class="glass-panel glass-panel-hover rounded-2xl p-6 text-center flex flex-col justify-center items-center">
+                        <div class="w-12 h-12 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-400 text-2xl mb-4">
+                            <i class="fa-solid fa-fire"></i>
+                        </div>
+                        <span class="text-3xl font-extrabold text-white">100%</span>
+                        <span class="text-xs font-medium text-gray-400 mt-1">Đam Mê & Động Lực</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="py-24 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-xs font-mono font-bold tracking-widest text-blue-400 uppercase mb-2">// KỸ NĂNG NỔI BẬT</h2>
+                <p class="text-3xl sm:text-4xl font-extrabold text-white">Công Nghệ & Lập Trình</p>
+                <div class="w-16 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto mt-4 rounded-full"></div>
+            </div>
+
+            <!-- Skills Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+                <!-- Skill Card 1: C/C++ -->
+                <div class="glass-panel glass-panel-hover rounded-2xl p-6 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-lg bg-blue-600/20 text-blue-400 flex items-center justify-center text-xl font-bold font-mono">
+                                    C++
+                                </div>
+                                <h3 class="text-lg font-bold text-white">Lập Trình C / C++</h3>
+                            </div>
+                            <span class="text-xs font-mono px-2.5 py-1 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20">Core Skill</span>
+                        </div>
+                        <p class="text-sm text-gray-400 mb-6">Thành thạo cú pháp, con trỏ (Pointers), quản lý bộ nhớ động, STL vector/map và tối ưu hóa hiệu năng.</p>
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-xs font-semibold mb-2">
+                            <span class="text-gray-300">Mức độ thành thạo</span>
+                            <span class="text-blue-400">88%</span>
+                        </div>
+                        <div class="w-full h-2 bg-slate-800 rounded-full overflow-hidden">
+                            <div class="h-full bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full w-[88%]"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Skill Card 2: DSA -->
+                <div class="glass-panel glass-panel-hover rounded-2xl p-6 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-lg bg-purple-600/20 text-purple-400 flex items-center justify-center text-xl">
+                                    <i class="fa-solid fa-sitemap"></i>
+                                </div>
+                                <h3 class="text-lg font-bold text-white">Cấu Trúc Dữ Liệu & Thuật Toán</h3>
+                            </div>
+                            <span class="text-xs font-mono px-2.5 py-1 rounded-full bg-purple-500/10 text-purple-400 border border-purple-500/20">Chuyên sâu</span>
+                        </div>
+                        <p class="text-sm text-gray-400 mb-6">Nắm vững Danh sách liên kết, Linked List, Stack, Queue, Tree, Graph và thuật toán Sắp xếp/Tìm kiếm.</p>
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-xs font-semibold mb-2">
+                            <span class="text-gray-300">Mức độ thành thạo</span>
+                            <span class="text-purple-400">82%</span>
+                        </div>
+                        <div class="w-full h-2 bg-slate-800 rounded-full overflow-hidden">
+                            <div class="h-full bg-gradient-to-r from-purple-500 to-pink-500 rounded-full w-[82%]"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Skill Card 3: OOP -->
+                <div class="glass-panel glass-panel-hover rounded-2xl p-6 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-lg bg-cyan-600/20 text-cyan-400 flex items-center justify-center text-xl">
+                                    <i class="fa-solid fa-cubes"></i>
+                                </div>
+                                <h3 class="text-lg font-bold text-white">Hướng Đối Tượng (OOP)</h3>
+                            </div>
+                            <span class="text-xs font-mono px-2.5 py-1 rounded-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">Căn bản - Nâng cao</span>
+                        </div>
+                        <p class="text-sm text-gray-400 mb-6">Áp dụng nhuần nhuyễn 4 tính chất OOP: Encapsulation, Inheritance, Polymorphism, Abstraction vào dự án.</p>
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-xs font-semibold mb-2">
+                            <span class="text-gray-300">Mức độ thành thạo</span>
+                            <span class="text-cyan-400">85%</span>
+                        </div>
+                        <div class="w-full h-2 bg-slate-800 rounded-full overflow-hidden">
+                            <div class="h-full bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full w-[85%]"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Skill Card 4: Basic Web UI -->
+                <div class="glass-panel glass-panel-hover rounded-2xl p-6 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-lg bg-orange-600/20 text-orange-400 flex items-center justify-center text-xl">
+                                    <i class="fa-brands fa-html5"></i>
+                                </div>
+                                <h3 class="text-lg font-bold text-white">Lập Trình Web UI</h3>
+                            </div>
+                            <span class="text-xs font-mono px-2.5 py-1 rounded-full bg-orange-500/10 text-orange-400 border border-orange-500/20">Front-End</span>
+                        </div>
+                        <p class="text-sm text-gray-400 mb-6">Xây dựng trang web cá nhân responsive đẹp mắt bằng HTML5, CSS3, Tailwind CSS và JavaScript cơ bản.</p>
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-xs font-semibold mb-2">
+                            <span class="text-gray-300">Mức độ thành thạo</span>
+                            <span class="text-orange-400">75%</span>
+                        </div>
+                        <div class="w-full h-2 bg-slate-800 rounded-full overflow-hidden">
+                            <div class="h-full bg-gradient-to-r from-orange-500 to-yellow-500 rounded-full w-[75%]"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Skill Card 5: Git & Tools -->
+                <div class="glass-panel glass-panel-hover rounded-2xl p-6 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-lg bg-emerald-600/20 text-emerald-400 flex items-center justify-center text-xl">
+                                    <i class="fa-brands fa-git-alt"></i>
+                                </div>
+                                <h3 class="text-lg font-bold text-white">Git & Tools Lập Trình</h3>
+                            </div>
+                            <span class="text-xs font-mono px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Công cụ</span>
+                        </div>
+                        <p class="text-sm text-gray-400 mb-6">Quản lý mã nguồn với Git/GitHub, sử dụng thành thạo Visual Studio Code, Visual Studio C++ và GDB Debugger.</p>
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-xs font-semibold mb-2">
+                            <span class="text-gray-300">Mức độ thành thạo</span>
+                            <span class="text-emerald-400">80%</span>
+                        </div>
+                        <div class="w-full h-2 bg-slate-800 rounded-full overflow-hidden">
+                            <div class="h-full bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full w-[80%]"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Skill Card 6: Database Basics -->
+                <div class="glass-panel glass-panel-hover rounded-2xl p-6 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-lg bg-pink-600/20 text-pink-400 flex items-center justify-center text-xl">
+                                    <i class="fa-solid fa-database"></i>
+                                </div>
+                                <h3 class="text-lg font-bold text-white">Cơ Sở Dữ Liệu SQL</h3>
+                            </div>
+                            <span class="text-xs font-mono px-2.5 py-1 rounded-full bg-pink-500/10 text-pink-400 border border-pink-500/20">Căn bản</span>
+                        </div>
+                        <p class="text-sm text-gray-400 mb-6">Truy vấn dữ liệu với MySQL/SQL Server, thiết kế sơ đồ ERD và kết nối dữ liệu ứng dụng.</p>
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-xs font-semibold mb-2">
+                            <span class="text-gray-300">Mức độ thành thạo</span>
+                            <span class="text-pink-400">70%</span>
+                        </div>
+                        <div class="w-full h-2 bg-slate-800 rounded-full overflow-hidden">
+                            <div class="h-full bg-gradient-to-r from-pink-500 to-rose-500 rounded-full w-[70%]"></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-24 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-xs font-mono font-bold tracking-widest text-blue-400 uppercase mb-2">// BÀI TẬP LỚN & DỰ ÁN</h2>
+                <p class="text-3xl sm:text-4xl font-extrabold text-white">Sản Phẩm Tiêu Biểu</p>
+                <div class="w-16 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto mt-4 rounded-full"></div>
+            </div>
+
+            <!-- Projects Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+                <!-- Project 1 -->
+                <div class="glass-panel glass-panel-hover rounded-3xl overflow-hidden flex flex-col justify-between group">
+                    <div>
+                        <!-- Project Cover Banner -->
+                        <div class="h-48 bg-gradient-to-br from-blue-900/50 to-indigo-900/50 relative overflow-hidden flex items-center justify-center p-6 border-b border-slate-800">
+                            <div class="absolute inset-0 bg-blue-600/10 group-hover:bg-blue-600/20 transition-all"></div>
+                            <i class="fa-solid fa-folder-tree text-6xl text-blue-400/60 group-hover:scale-110 transition duration-500"></i>
+                            <span class="absolute top-4 right-4 text-xs font-mono px-3 py-1 rounded-full bg-blue-500/20 text-blue-300 border border-blue-500/30">C++ Console</span>
+                        </div>
+
+                        <div class="p-6 space-y-4">
+                            <h3 class="text-xl font-bold text-white group-hover:text-blue-400 transition-colors">
+                                Quản Lý Sinh Viên & Điểm Số
+                            </h3>
+                            <p class="text-sm text-gray-400 leading-relaxed">
+                                Ứng dụng C++ áp dụng mô hình OOP chuẩn, cấu trúc dữ liệu Danh sách liên kết đơn (Singly Linked List) và đọc/ghi tệp tin Binary để lưu trữ thông tin sinh viên bền vững.
+                            </p>
+                            <!-- Tech Tags -->
+                            <div class="flex flex-wrap gap-2 pt-2">
+                                <span class="text-xs font-mono px-2.5 py-1 rounded-lg bg-slate-800 text-slate-300 border border-slate-700">C++</span>
+                                <span class="text-xs font-mono px-2.5 py-1 rounded-lg bg-slate-800 text-slate-300 border border-slate-700">OOP</span>
+                                <span class="text-xs font-mono px-2.5 py-1 rounded-lg bg-slate-800 text-slate-300 border border-slate-700">File I/O</span>
+                                <span class="text-xs font-mono px-2.5 py-1 rounded-lg bg-slate-800 text-slate-300 border border-slate-700">DSA</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="p-6 pt-0 flex items-center justify-between">
+                        <span class="text-xs text-slate-500 font-mono">Đồ án môn học</span>
+                        <a href="https://github.com" target="_blank" class="text-sm font-semibold text-blue-400 hover:text-blue-300 flex items-center gap-1">
+                            <span>Mã nguồn</span>
+                            <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Project 2 -->
+                <div class="glass-panel glass-panel-hover rounded-3xl overflow-hidden flex flex-col justify-between group">
+                    <div>
+                        <!-- Project Cover Banner -->
+                        <div class="h-48 bg-gradient-to-br from-purple-900/50 to-pink-900/50 relative overflow-hidden flex items-center justify-center p-6 border-b border-slate-800">
+                            <div class="absolute inset-0 bg-purple-600/10 group-hover:bg-purple-600/20 transition-all"></div>
+                            <i class="fa-solid fa-gamepad text-6xl text-purple-400/60 group-hover:scale-110 transition duration-500"></i>
+                            <span class="absolute top-4 right-4 text-xs font-mono px-3 py-1 rounded-full bg-purple-500/20 text-purple-300 border border-purple-500/30">Game 2D</span>
+                        </div>
+
+                        <div class="p-6 space-y-4">
+                            <h3 class="text-xl font-bold text-white group-hover:text-purple-400 transition-colors">
+                                Game 2D Tank Battle SFML
+                            </h3>
+                            <p class="text-sm text-gray-400 leading-relaxed">
+                                Game bắn xe tăng 2D đồ họa phát triển bằng C++ kết hợp thư viện SFML. Tích hợp xử lý va chạm, âm thanh, di chuyển và AI kẻ địch di chuyển thông minh.
+                            </p>
+                            <!-- Tech Tags -->
+                            <div class="flex flex-wrap gap-2 pt-2">
+                                <span class="text-xs font-mono px-2.5 py-1 rounded-lg bg-slate-800 text-slate-300 border border-slate-700">C++</span>
+                                <span class="text-xs font-mono px-2.5 py-1 rounded-lg bg-slate-800 text-slate-300 border border-slate-700">SFML</span>
+                                <span class="text-xs font-mono px-2.5 py-1 rounded-lg bg-slate-800 text-slate-300 border border-slate-700">2D Physics</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="p-6 pt-0 flex items-center justify-between">
+                        <span class="text-xs text-slate-500 font-mono">Dự án cá nhân</span>
+                        <a href="https://github.com" target="_blank" class="text-sm font-semibold text-purple-400 hover:text-purple-300 flex items-center gap-1">
+                            <span>Mã nguồn</span>
+                            <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Project 3 -->
+                <div class="glass-panel glass-panel-hover rounded-3xl overflow-hidden flex flex-col justify-between group">
+                    <div>
+                        <!-- Project Cover Banner -->
+                        <div class="h-48 bg-gradient-to-br from-cyan-900/50 to-emerald-900/50 relative overflow-hidden flex items-center justify-center p-6 border-b border-slate-800">
+                            <div class="absolute inset-0 bg-cyan-600/10 group-hover:bg-cyan-600/20 transition-all"></div>
+                            <i class="fa-solid fa-laptop-code text-6xl text-cyan-400/60 group-hover:scale-110 transition duration-500"></i>
+                            <span class="absolute top-4 right-4 text-xs font-mono px-3 py-1 rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">Web Portfolio</span>
+                        </div>
+
+                        <div class="p-6 space-y-4">
+                            <h3 class="text-xl font-bold text-white group-hover:text-cyan-400 transition-colors">
+                                Personal Portfolio Dark Mode
+                            </h3>
+                            <p class="text-sm text-gray-400 leading-relaxed">
+                                Trang web hồ sơ cá nhân thiết kế chuẩn hiện đại Dark Mode, tích hợp hiệu ứng Glassmorphic, gõ chữ Typewriter, tương tác liên hệ mượt mà.
+                            </p>
+                            <!-- Tech Tags -->
+                            <div class="flex flex-wrap gap-2 pt-2">
+                                <span class="text-xs font-mono px-2.5 py-1 rounded-lg bg-slate-800 text-slate-300 border border-slate-700">HTML5</span>
+                                <span class="text-xs font-mono px-2.5 py-1 rounded-lg bg-slate-800 text-slate-300 border border-slate-700">Tailwind CSS</span>
+                                <span class="text-xs font-mono px-2.5 py-1 rounded-lg bg-slate-800 text-slate-300 border border-slate-700">JavaScript</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="p-6 pt-0 flex items-center justify-between">
+                        <span class="text-xs text-slate-500 font-mono">Trực tuyến</span>
+                        <a href="#hero" class="text-sm font-semibold text-cyan-400 hover:text-cyan-300 flex items-center gap-1">
+                            <span>Xem ngay</span>
+                            <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-24 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-xs font-mono font-bold tracking-widest text-blue-400 uppercase mb-2">// THÔNG TIN LIÊN HỆ</h2>
+                <p class="text-3xl sm:text-4xl font-extrabold text-white">Kết Nối Với Tôi</p>
+                <div class="w-16 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto mt-4 rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                
+                <!-- Contact Direct Cards -->
+                <div class="lg:col-span-5 space-y-6">
+                    
+                    <!-- Facebook Highlight Box -->
+                    <a href="https://www.facebook.com/share/1CXvAggeAa/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" class="glass-panel glass-panel-hover rounded-2xl p-6 flex items-center gap-5 block group">
+                        <div class="w-14 h-14 rounded-2xl bg-blue-600/20 text-blue-400 flex items-center justify-center text-2xl shrink-0 group-hover:bg-blue-600 group-hover:text-white transition-all">
+                            <i class="fa-brands fa-facebook-f"></i>
+                        </div>
+                        <div class="overflow-hidden">
+                            <span class="text-xs font-mono text-gray-400 uppercase">Facebook Cá Nhân</span>
+                            <h4 class="text-lg font-bold text-white group-hover:text-blue-400 transition-colors truncate">An Văn Hải</h4>
+                            <p class="text-xs text-blue-400 flex items-center gap-1 mt-1">
+                                <span>Ghé thăm trang cá nhân</span>
+                                <i class="fa-solid fa-external-link text-[10px]"></i>
+                            </p>
+                        </div>
+                    </a>
+
+                    <!-- Email Direct Box with Copy Button -->
+                    <div class="glass-panel glass-panel-hover rounded-2xl p-6 flex items-center justify-between gap-4">
+                        <div class="flex items-center gap-5 overflow-hidden">
+                            <div class="w-14 h-14 rounded-2xl bg-purple-600/20 text-purple-400 flex items-center justify-center text-2xl shrink-0">
+                                <i class="fa-solid fa-envelope"></i>
+                            </div>
+                            <div class="overflow-hidden">
+                                <span class="text-xs font-mono text-gray-400 uppercase">Email Sinh Viên</span>
+                                <h4 class="text-sm sm:text-base font-bold text-white truncate" id="email-text">anvanhai.donga@gmail.com</h4>
+                            </div>
+                        </div>
+                        <button onclick="copyEmail()" title="Copy Email" class="p-3 rounded-xl bg-slate-800 hover:bg-purple-600 text-gray-300 hover:text-white transition-all shrink-0">
+                            <i class="fa-regular fa-copy"></i>
+                        </button>
+                    </div>
+
+                    <!-- Location & University Box -->
+                    <div class="glass-panel rounded-2xl p-6 space-y-4">
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-10 rounded-xl bg-cyan-600/20 text-cyan-400 flex items-center justify-center text-lg">
+                                <i class="fa-solid fa-location-dot"></i>
+                            </div>
+                            <div>
+                                <h5 class="text-sm font-bold text-white">Địa chỉ sinh sống</h5>
+                                <p class="text-xs text-gray-400">Đà Nẵng, Việt Nam</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-4 border-t border-slate-800/80 pt-4">
+                            <div class="w-10 h-10 rounded-xl bg-indigo-600/20 text-indigo-400 flex items-center justify-center text-lg">
+                                <i class="fa-solid fa-building-columns"></i>
+                            </div>
+                            <div>
+                                <h5 class="text-sm font-bold text-white">Trường Học</h5>
+                                <p class="text-xs text-gray-400">Đại học Đông Á (Năm 3)</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Interactive Message Form -->
+                <div class="lg:col-span-7 glass-panel rounded-3xl p-8">
+                    <h3 class="text-2xl font-bold text-white mb-2">Gửi Nhắn Tin Trực Tiếp</h3>
+                    <p class="text-sm text-gray-400 mb-6">Bạn có câu hỏi hoặc muốn trao đổi công việc? Hãy để lại tin nhắn nhé!</p>
+
+                    <form id="contact-form" onsubmit="handleFormSubmit(event)" class="space-y-5">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                            <div>
+                                <label for="name" class="block text-xs font-mono text-gray-300 uppercase mb-2">Họ và Tên</label>
+                                <input type="text" id="name" required placeholder="Nguyễn Văn A" class="w-full px-4 py-3 rounded-xl bg-slate-950/80 border border-slate-800 text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all text-sm">
+                            </div>
+                            <div>
+                                <label for="email" class="block text-xs font-mono text-gray-300 uppercase mb-2">Email Liên Hệ</label>
+                                <input type="email" id="email" required placeholder="example@gmail.com" class="w-full px-4 py-3 rounded-xl bg-slate-950/80 border border-slate-800 text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all text-sm">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label for="subject" class="block text-xs font-mono text-gray-300 uppercase mb-2">Tiêu Đề</label>
+                            <input type="text" id="subject" required placeholder="Trao đổi công việc / Học tập..." class="w-full px-4 py-3 rounded-xl bg-slate-950/80 border border-slate-800 text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all text-sm">
+                        </div>
+
+                        <div>
+                            <label for="message" class="block text-xs font-mono text-gray-300 uppercase mb-2">Nội Dung Tin Nhắn</label>
+                            <textarea id="message" rows="4" required placeholder="Nhập lời nhắn của bạn ở đây..." class="w-full px-4 py-3 rounded-xl bg-slate-950/80 border border-slate-800 text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all text-sm"></textarea>
+                        </div>
+
+                        <button type="submit" class="w-full py-3.5 rounded-xl text-sm font-semibold text-white bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 hover:opacity-95 transition-all shadow-lg shadow-blue-500/20 active:scale-[0.99]">
+                            <i class="fa-solid fa-paper-plane mr-2"></i> Gửi Tin Nhắn
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-800/80 py-8 bg-slate-950/60">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-2">
+                <span class="font-mono text-blue-400">&lt;</span>
+                <span class="font-bold text-white">An Văn Hải</span>
+                <span class="font-mono text-purple-400">/&gt;</span>
+                <span class="text-xs text-slate-500 ml-2">© 2026. All rights reserved.</span>
+            </div>
+
+            <div class="flex items-center gap-6 text-slate-400 text-sm">
+                <a href="#hero" class="hover:text-white transition-colors">Về đầu trang</a>
+                <a href="https://www.facebook.com/share/1CXvAggeAa/?mibextid=wwXIfr" target="_blank" class="hover:text-blue-400 transition-colors">Facebook</a>
+                <a href="mailto:anvanhai.donga@gmail.com" class="hover:text-blue-400 transition-colors">Email</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Toast Notification Banner -->
+    <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 glass-panel border border-blue-500/50 text-white px-5 py-4 rounded-2xl shadow-2xl flex items-center gap-3">
+        <div id="toast-icon" class="w-8 h-8 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center">
+            <i class="fa-solid fa-check"></i>
+        </div>
+        <span id="toast-msg" class="text-sm font-medium">Đã sao chép email!</span>
+    </div>
+
+    <!-- JavaScript Section -->
+    <script>
+        // Typewriter Effect Logic
+        const words = ["Sinh viên Năm 3 ĐH Đông Á", "C++ & Software Developer", "Problem Solver & Algorithmic Mind", "OOP Architecture Enthusiast"];
+        let wordIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        const typewriterEl = document.getElementById("typewriter");
+
+        function typeEffect() {
+            const currentWord = words[wordIndex];
+            
+            if (isDeleting) {
+                typewriterEl.textContent = currentWord.substring(0, charIndex - 1);
+                charIndex--;
+            } else {
+                typewriterEl.textContent = currentWord.substring(0, charIndex + 1);
+                charIndex++;
+            }
+
+            let typeSpeed = isDeleting ? 40 : 80;
+
+            if (!isDeleting && charIndex === currentWord.length) {
+                typeSpeed = 2000; // Pause at end of word
+                isDeleting = true;
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                wordIndex = (wordIndex + 1) % words.length;
+                typeSpeed = 500;
+            }
+
+            setTimeout(typeEffect, typeSpeed);
+        }
+
+        // Start Typewriter on load
+        window.addEventListener("DOMContentLoaded", typeEffect);
+
+        // Mobile Menu Toggle
+        const menuBtn = document.getElementById("menu-btn");
+        const mobileMenu = document.getElementById("mobile-menu");
+        const mobileLinks = document.querySelectorAll(".mobile-link");
+
+        menuBtn.addEventListener("click", () => {
+            mobileMenu.classList.toggle("hidden");
+        });
+
+        mobileLinks.forEach(link => {
+            link.addEventListener("click", () => {
+                mobileMenu.classList.add("hidden");
+            });
+        });
+
+        // Navbar Shadow on Scroll
+        const navbar = document.getElementById("navbar");
+        window.addEventListener("scroll", () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add("py-1");
+            } else {
+                navbar.classList.remove("py-1");
+            }
+        });
+
+        // Toast Function
+        function showToast(message, isSuccess = true) {
+            const toast = document.getElementById("toast");
+            const toastMsg = document.getElementById("toast-msg");
+            const toastIcon = document.getElementById("toast-icon");
+
+            toastMsg.textContent = message;
+            if (isSuccess) {
+                toastIcon.className = "w-8 h-8 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center";
+                toastIcon.innerHTML = '<i class="fa-solid fa-check"></i>';
+            } else {
+                toastIcon.className = "w-8 h-8 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center";
+                toastIcon.innerHTML = '<i class="fa-solid fa-paper-plane"></i>';
+            }
+
+            toast.classList.remove("translate-y-20", "opacity-0");
+            
+            setTimeout(() => {
+                toast.classList.add("translate-y-20", "opacity-0");
+            }, 3500);
+        }
+
+        // Copy Email function with execCommand fallback
+        function copyEmail() {
+            const emailText = document.getElementById("email-text").innerText;
+            const tempInput = document.createElement("input");
+            tempInput.value = emailText;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand("copy");
+            document.body.removeChild(tempInput);
+
+            showToast("Đã sao chép Email vào bộ nhớ tạm!");
+        }
+
+        // Form Submit Simulation
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            const name = document.getElementById("name").value;
+            showToast(`Cảm ơn ${name}! Tin nhắn của bạn đã được gửi thành công.`, false);
+            document.getElementById("contact-form").reset();
+        }
+    </script>
 </body>
 </html>
