@@ -33,7 +33,7 @@ Commit: $COMMIT_MSG"
 
     stage('Deploy Vercel') {
       steps {
-        sh 'npx --yes vercel deploy --prod --yes --token token_sai_co_y'
+        sh 'npx --yes vercel deploy --prod --yes --token $VERCEL_TOKEN'
       }
     }
   }
